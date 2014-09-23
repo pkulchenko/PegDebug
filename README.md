@@ -8,7 +8,8 @@ PegDebug allows to trace the processing of LPeg rules and to visualize how
 patterns are explored and matched as well as when captures are made.
 
 PegDebug is based on a [prototype by Patrick Donnelly](http://lua-users.org/lists/lua-l/2009-10/msg00774.html),
-which has been improved to provide formatted output, report captures, and correctly handle folding captures.
+which has been improved to provide formatted output, handle folding captures,
+and report captures (with some [limitations](#limitations)).
 
 ## Usage
 
@@ -58,15 +59,15 @@ The output also includes all captures when they are produced.
 
 ## Options
 
-* out (table) -- provide a table to store results instead of `printing` them;
-* only (table) -- provide a table to specify which rules to include in the output;
-* serializer (function) -- provide an alternative mechanism to serialize captured values;
+* `out` (table) -- provide a table to store results instead of `printing` them;
+* `only` (table) -- provide a table to specify which rules to include in the output;
+* `serializer` (function) -- provide an alternative mechanism to serialize captured values;
 * `'/'`, `'+'`, `'-'`, `'='` (boolean) -- disable handling of specific events;
 for example, `['/'] = false` will disable showing captures in the output.
 
 ## Installation
 
-Make src/pegdebug.lua available to your script.
+Make `src/pegdebug.lua` available to your script.
 
 ## Limitations
 
