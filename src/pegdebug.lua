@@ -3,6 +3,8 @@
 -- Copyright 2014 Paul Kulchenko
 --
 
+local lpeg = require "lpeg"
+
 local pegdebug = {
   _NAME = "pegdebug",
   _VERSION = 0.40,
