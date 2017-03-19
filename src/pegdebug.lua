@@ -5,6 +5,11 @@
 
 local lpeg = require "lpeg"
 
+local Cmt = lpeg.Cmt
+local Cp  = lpeg.Cp
+local P   = lpeg.P
+
+
 local pegdebug = {
   _NAME = "pegdebug",
   _VERSION = 0.40,
@@ -36,7 +41,7 @@ function pegdebug.trace(grammar, opts)
     print = function(...) table.insert(opts.out, table.concat({...}, "\t")) end
   end
   for k, p in pairs(grammar) do
-    local enter = lpeg.Cmt(lpeg.P(true), function(s, p, ...)
+    local enter = Cmt(P(true), function(s, p, ...)
         start[level] = p
         if opts['+'] ~= false then
           print((" "):rep(level).."+", k, p, line(s:sub(p,p)))
@@ -44,14 +49,14 @@ function pegdebug.trace(grammar, opts)
         level = level + 1
         return true
       end)
-    local leave = lpeg.Cmt(lpeg.P(true), function(s, p, ...)
+    local leave = Cmt(P(true), function(s, p, ...)
         level = level - 1
         if opts['-'] ~= false then
           print((" "):rep(level).."-", k, p)
         end
         return true
-      end) * (lpeg.P(1) - lpeg.P(1))
-    local eq = lpeg.Cmt(lpeg.P(true), function(s, p, ...)
+      end) * (P(1) - P(1))
+    local eq = Cmt(P(true), function(s, p, ...)
         level = level - 1
         if opts['='] ~= false then
           print((" "):rep(level).."=", k, start[level]..'-'..(p-1), line(s:sub(start[level],p-1)))
@@ -61,12 +66,12 @@ function pegdebug.trace(grammar, opts)
     if k ~= 1 and (not opts.only or opts.only[k]) then
       if opts['/'] ~= false
       and (type(opts['/']) ~= 'table' or opts['/'][k] ~= false) then
-        -- lpeg.Cp() is needed to only get captures (and not the whole match)
-        p = lpeg.Cp() * p / function(pos, ...)
+        -- Cp() is needed to only get captures (and not the whole match)
+        p = Cp() * p / function(pos, ...)
             print((" "):rep(level).."/", k, pos, select('#', ...), pretty(...))
             return ...
           end
-      end    
+      end
       grammar[k] = enter * p * eq + leave
     end
   end
