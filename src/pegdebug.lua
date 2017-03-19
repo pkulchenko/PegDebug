@@ -9,10 +9,9 @@ local Cmt = lpeg.Cmt
 local Cp  = lpeg.Cp
 local P   = lpeg.P
 
-
 local pegdebug = {
   _NAME = "pegdebug",
-  _VERSION = 0.40,
+  _VERSION = 0.41,
   _COPYRIGHT = "Paul Kulchenko",
   _DESCRIPTION = "Debugger for LPeg expressions and processing",
 }
